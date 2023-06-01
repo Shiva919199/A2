@@ -1,0 +1,252 @@
+#include<iostream>
+#include<stack>
+using namespace std;
+int arr[10][10];
+int visit[10];
+int n,e,goal,edgefound;
+
+void addedge(int number){
+	cout<<"Enter edge "<<number<<":- ";
+	int a,b;
+	cin>>a>>b;
+	arr[a][b]=1;
+	arr[b][a]=1;
+}
+int dfs(int node){
+	if(visit[node]==0){
+		cout<<node<<" ";
+		if(node==goal){
+			edgefound=1;
+			return 0;
+		}
+		visit[node]=1;
+		for(int i=0;i<=n;i++){
+			if(edgefound)return 0;
+			if(arr[node][i]==1){
+				dfs(i);
+			}
+		}
+	}		
+}
+
+int main(){
+	edgefound=0;
+	cout<<"Emter no of nodes ";
+	cin>>n;
+	cout<<"Enter no of edges ";
+	cin>>e;
+	cout<<"Enter Goal state ";
+	cin>>goal;
+	for(int i=0;i<=n;i++){
+		visit[i]=0;
+	}
+	for(int i=0;i<=n;i++){
+		for(int j=0;j<=n;j++){
+			arr[i][j]=0;
+		}
+	}
+	for(int i=1;i<=e;i++){addedge(i);}
+	cout<<"DFS Traversal is:";
+	
+	dfs(0);
+	if(edgefound)cout<<"\nNode is Present\n";
+	else cout<<"\nNode is Abscent\n";
+}
+
+
+/*Output
+prjlab@prjlab-HP-280-G3-MT:~/Documents/B50$ g++ DFS.cpp -o ass1
+prjlab@prjlab-HP-280-G3-MT:~/Documents/B50$ ./ass1
+Emter no of nodes 8    
+Enter no of edges 5
+Enter Goal state 4
+Enter edge 1:- 0 3
+Enter edge 2:- 3 5
+Enter edge 3:- 5 6
+Enter edge 4:- 1 2
+Enter edge 5:- 2 4
+DFS Traversal is:0 3 5 6 
+Node is Abscent
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+Problem Statement-Implement  Breadth First Search algorithm, Use an undirected
+graph and develop a recursive algorithm for searching all the vertices of a graph or tree data structure.
+*/
+
+
+
+#include<iostream>
+#include<queue>
+using namespace std;
+queue<int>q;
+int v,e,g,edgefound;
+int arr[10][10];
+int visit[100];
+
+
+void addedge(int number){
+        int a,b;
+        cout<<"Enter two edges: ";
+        cin>>a>>b;
+        arr[a][b]=1;
+}
+
+void BFS(){
+ while (!q.empty()){
+ int node=q.front();
+ q.pop();
+
+ if(visit[node]==0)
+ {
+    cout<<node<<" ";
+    visit[node]=1;
+ 
+    if(node==g){
+      edgefound=1;
+      break;
+  }
+    for (int i=0;i<=v;i++){
+   	 if(arr[node][i]==1)q.push(i);
+   }
+  }
+ }
+}
+
+int main(){
+
+cout<<"Enter number of vertices";
+cin>>v;
+cout<<"Enter number of edges";
+cin>>e;
+cout<<"Enter goal state";
+cin>>g;
+for(int i=0;i<v;i++){
+    visit[i]=0;
+}
+for(int i=0;i<=v;i++){
+    for(int j=0;j<=v;j++){
+        arr[i][j]=0;
+    }
+}
+for(int i=0;i<e;i++){
+    addedge(i);
+}
+
+
+q.push(0);
+cout<<"The BFS traversal is:";
+BFS();
+if(edgefound)cout<<"\nNode is Present\n";
+else cout<<"\nNode is Abscent\n";
+
+return 0;
+}
+/*Output
+prjlab@prjlab-HP-280-G3-MT:~/Documents/B50$ g++ ass1.cpp -o ass1
+prjlab@prjlab-HP-280-G3-MT:~/Documents/B50$ ./ass1
+Enter number of vertices5
+Enter number of edges5
+Enter goal state4
+Enter two edges: 0 3
+Enter two edges: 0 1
+Enter two edges: 0 2
+Enter two edges: 1 2
+Enter two edges: 2 4
+The BFS traversal is:0 1 2 3 4 
+Node is Present
+*/
+
+
+
+/*
+// #include<iostream>
+// #include<stack>
+// using namespace std;
+// int arr[10][10];
+// int visit[10];
+// int n,e,goal,edgefound;
+
+// void addedge(int number){
+// 	cout<<"Enter edge "<<number<<" :- ";
+// 	int a,b;
+// 	cin>>a>>b;
+// 	arr[a][b]=1;
+// 	arr[b][a]=1;
+// }
+// int dfs(int node){
+// 	if(visit[node]==0){
+// 		cout<<node<<" ";
+// 		if(node==goal){
+// 			edgefound=1;
+// 			return 0;
+// 		}
+// 		visit[node]=1;
+// 		for(int i=0;i<=n;i++){
+// 			if(edgefound)
+//                 return 0;
+// 			if(arr[node][i]==1)
+// 				dfs(i);
+// 		}
+// 	}		
+// }
+
+// /*
+//          0
+//       /     \
+//     1         2
+//   /   \       |
+// 3       4     5
+
+// arr[6][6] 
+// 0 1 1 0 0 0
+// 1 0 0 1 1 0
+// 1 0 0 0 0 1
+// 0 1 0 0 0 0
+// 0 1 0 0 0 0
+// 0 0 1 0 0 0 
+
+// visit[6]    1 1 0 1 0 0
+// Print : 0 1 3   (As 3 is goal state)
+// */
+
+// int main(){
+// 	edgefound=0;
+// 	cout<<"Enter no of nodes ";
+// 	cin>>n;
+// 	cout<<"Enter no of edges ";
+// 	cin>>e;
+// 	cout<<"Enter Goal state ";
+// 	cin>>goal;
+// 	for(int i=0;i<=n;i++){
+// 		visit[i]=0;
+// 	}
+// 	for(int i=0;i<=n;i++){
+// 		for(int j=0;j<=n;j++){
+// 			arr[i][j]=0;
+// 		}
+// 	}
+// 	for(int i=1;i<=e;i++)
+//         addedge(i);
+
+// 	cout<<"DFS Traversal is:";
+// 	dfs(0);
+
+// 	if(edgefound)
+//         cout<<"\nNode is Present\n";
+// 	else 
+//         cout<<"\nNode is Abscent\n";
+// }
+*/
